@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawVibe — Qloo Taste & Lifestyle Pet Matchmaker (Dogs & Cats)</title>
+  <meta name="description" content="Discover your ideal dog or cat breed match powered by Qloo cultural taste intelligence, lifestyle vector modeling, and verified breed trait profiles.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23C5A059%22><path d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z%22/></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon-box">
+          <!-- Flat Paw SVG Icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 10.5c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-5.5-1c1.38 0 2.5-1.12 2.5-2.5S7.88 4.5 6.5 4.5 4 5.62 4 7s1.12 2.5 2.5 2.5zm11 0c1.38 0 2.5-1.12 2.5-2.5S18.88 4.5 17.5 4.5 15 5.62 15 7s1.12 2.5 2.5 2.5zm-5.5 4c-3.31 0-6 2.69-6 6 0 .55.45 1 1 1h10c.55 0 1-.45 1-1 0-3.31-2.69-6-6-6z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>PawVibe</h1>
+          <span>Qloo Taste & Lifestyle Pet Matchmaker</span>
+        </div>
+      </div>
+      <div class="header-status">
+        <div class="status-badge" id="api-status-badge">
+          <span class="pulse-dot"></span>
+          <span id="api-status-text">Qloo Cultural Engine Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+        <span>Cultural Taste × Breed Compatibility</span>
+      </div>
+      <h2 class="hero-title">Your Tastes Define Your Routine.<br><span class="gold-text">Your Routine Chooses Your Pet.</span></h2>
+      <p class="hero-desc">
+        We map your cultural affinities—music, cinema, dining, habits, and neighborhood density—into a 5D Lifestyle Vector, then calculate Euclidean trait distances to find the dogs and cats that truly fit your life.
+      </p>
+    </section>
+
+    <!-- Quick Preset Personas -->
+    <section class="preset-bar">
+      <div class="preset-title">
+        <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+        <span>Quick Start: Choose a Lifestyle Persona</span>
+      </div>
+      <div class="preset-grid" id="preset-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- Main Multi-Step Form -->
+    <main class="form-card" id="quiz-card">
+      <!-- Steps Navigation -->
+      <nav class="steps-nav">
+        <button class="step-tab active" data-step="1" id="tab-step-1">
+          <span class="step-num">1</span>
+          <span>Cultural Taste Profile</span>
+        </button>
+        <button class="step-tab" data-step="2" id="tab-step-2">
+          <span class="step-num">2</span>
+          <span>Habitat & Living Space</span>
+        </button>
+        <button class="step-tab" data-step="3" id="tab-step-3">
+          <span class="step-num">3</span>
+          <span>Daily Rhythm & Routine</span>
+        </button>
+      </nav>
+
+      <!-- Step 1: Cultural Taste -->
+      <div class="form-step active" id="step-1">
+        <div class="step-header">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            Step 1: Tell Us What You Love
+          </h3>
+          <p>Qloo uses cultural affinities (films, bands, sports, hobbies) to decode your energy levels, social exposure, and aesthetic preferences.</p>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2L7 10l-6 8h22L14 6z"/></svg>
+            Outdoor & Fitness Signals
+          </span>
+          <div class="tags-wrap" id="tags-outdoor">
+            <span class="tag-pill" data-val="Trail Running">
+              <svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l2.9-1.2-1.4 6.7-3.9-.8-.4 2 5.4 1.1z"/></svg>
+              Trail Running
+            </span>
+            <span class="tag-pill" data-val="Hiking">
+              <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2L7 10l-6 8h22L14 6z"/></svg>
+              Hiking
+            </span>
+            <span class="tag-pill" data-val="National Parks">
+              <svg viewBox="0 0 24 24"><path d="M12 2L6 11h3v7H6l-3 4h18l-3-4h-3v-7h3L12 2z"/></svg>
+              National Parks
+            </span>
+            <span class="tag-pill" data-val="CrossFit">
+              <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43 1.43 1.43 2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43 1.43-1.43-1.43-1.43 1.43-1.43-1.43-1.43z"/></svg>
+              CrossFit
+            </span>
+            <span class="tag-pill" data-val="Surfing">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.46z"/></svg>
+              Surfing
+            </span>
+            <span class="tag-pill" data-val="Rock Climbing">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-4v-2h4v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              Rock Climbing
+            </span>
+            <span class="tag-pill" data-val="Cycling">
+              <svg viewBox="0 0 24 24"><path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm5.8-10l2.4-3.6c.4-.6 1-1 1.8-1h4v2h-3.4l-1.6 2.4 1.8 1.8c.6.6 1 1.4 1 2.3v3.6h-2v-3.6l-1.8-1.8-1.6 2.4c-.4.6-1 1-1.8 1H7v-2h3.4l1.4-2.5zM19 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/></svg>
+              Cycling
+            </span>
+            <span class="tag-pill" data-val="Camping">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 20h20L12 2zm0 5l6 11H6l6-11z"/></svg>
+              Camping
+            </span>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            Music & Soundscape
+          </span>
+          <div class="tags-wrap" id="tags-music">
+            <span class="tag-pill" data-val="Indie Rock">
+              <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              Indie Rock
+            </span>
+            <span class="tag-pill" data-val="Electronic Music">
+              <svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 2.21 1.79 4 4 4h1v-8h-3v-3c0-3.87 3.13-7 7-7s7 3.13 7 7v3h-3v8h1c2.21 0 4-1.79 4-4v-7c0-4.97-4.03-9-9-9z"/></svg>
+              Electronic Music
+            </span>
+            <span class="tag-pill" data-val="Ambient Music">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
+              Ambient Music
+            </span>
+            <span class="tag-pill" data-val="Lo-Fi">
+              <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+              Lo-Fi Beats
+            </span>
+            <span class="tag-pill" data-val="Jazz">
+              <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              Jazz
+            </span>
+            <span class="tag-pill" data-val="Hip Hop">
+              <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+              Hip Hop
+            </span>
+            <span class="tag-pill" data-val="Raves">
+              <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+              Raves & Clubs
+            </span>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+            Cinema, Arts & Creative Downtime
+          </span>
+          <div class="tags-wrap" id="tags-arts">
+            <span class="tag-pill" data-val="Indie Film">
+              <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+              Indie Film
+            </span>
+            <span class="tag-pill" data-val="A24">
+              <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 9H3V5h9v7z"/></svg>
+              A24 Films
+            </span>
+            <span class="tag-pill" data-val="Studio Ghibli">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              Studio Ghibli
+            </span>
+            <span class="tag-pill" data-val="Reading">
+              <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+              Books & Reading
+            </span>
+            <span class="tag-pill" data-val="Vinyl Records">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/></svg>
+              Vinyl Records
+            </span>
+            <span class="tag-pill" data-val="Coffee Shops">
+              <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+              Specialty Coffee
+            </span>
+            <span class="tag-pill" data-val="Gaming">
+              <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+              Video Games
+            </span>
+            <span class="tag-pill" data-val="Plant Care">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
+              Plant Care
+            </span>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Add Your Favorite Artist, Hobby, or Brand
+          </span>
+          <div class="custom-tag-box">
+            <input type="text" id="custom-tag-input" class="input-field" placeholder="e.g. Wes Anderson, Arc'teryx, Board Games, Baking...">
+            <button type="button" id="btn-add-tag" class="btn-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              Add Signal
+            </button>
+          </div>
+          <div class="tags-wrap" id="custom-tags-container" style="margin-top: 14px;"></div>
+        </div>
+
+        <div class="form-actions">
+          <div></div>
+          <button type="button" class="btn-primary" id="btn-next-1">
+            <span>Continue to Living Space</span>
+            <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Living & Habitat -->
+      <div class="form-step" id="step-2">
+        <div class="step-header">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Step 2: Where & How Do You Live?
+          </h3>
+          <p>Space and neighborhood density set physical boundaries for animal size and exercise footprint.</p>
+        </div>
+
+        <div class="taste-category" style="margin-bottom: 26px;">
+          <label class="category-label" for="input-location">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            City, Neighborhood, or ZIP Code
+          </label>
+          <input type="text" id="input-location" class="input-field" placeholder="e.g. Silver Lake, Los Angeles, CA or Brooklyn, NY" value="Brooklyn, NY" style="width: 100%;">
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-4v-2h4v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Home Type & Footprint
+          </span>
+          <div class="options-grid">
+            <label class="radio-card" data-group="home_type">
+              <input type="radio" name="home_type" value="studio">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M4 4h16v16H4V4zm2 2v12h12V6H6z"/></svg>
+              <h4>Studio Loft</h4>
+              <p>Compact urban studio under 600 sq ft</p>
+            </label>
+            <label class="radio-card selected" data-group="home_type">
+              <input type="radio" name="home_type" value="apartment" checked>
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
+              <h4>1-2 BR Apartment</h4>
+              <p>Standard urban or suburban flat</p>
+            </label>
+            <label class="radio-card" data-group="home_type">
+              <input type="radio" name="home_type" value="townhouse">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M19 9.3V4h-3v2.6L12 3 2 12h3v8h5v-6h4v6h5v-8h3l-3-2.7z"/></svg>
+              <h4>Townhouse / Multi-level</h4>
+              <p>Spacious multi-floor home with balcony</p>
+            </label>
+            <label class="radio-card" data-group="home_type">
+              <input type="radio" name="home_type" value="house_yard">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              <h4>House with Yard</h4>
+              <p>Fenced outdoor space and acreage</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="btn-back-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 11H7.14l5.43-5.43-1.42-1.42L2.86 12l8.29 8.29 1.42-1.42L7.14 13H19v-2z"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-primary" id="btn-next-2">
+            <span>Continue to Routine</span>
+            <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Schedule & Vibe -->
+      <div class="form-step" id="step-3">
+        <div class="step-header">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            Step 3: Your Daily Routine & Soundscape
+          </h3>
+          <p>Pet breeds vary in separation anxiety, vocalization, and reliance on owner presence.</p>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+            Work Style & Presence
+          </span>
+          <div class="options-grid">
+            <label class="radio-card selected" data-group="work_style">
+              <input type="radio" name="work_style" value="remote" checked>
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+              <h4>100% Remote (WFH)</h4>
+              <p>Home all day; highly companionable</p>
+            </label>
+            <label class="radio-card" data-group="work_style">
+              <input type="radio" name="work_style" value="hybrid">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+              <h4>Hybrid Schedule</h4>
+              <p>Balanced schedule, 2-3 days office</p>
+            </label>
+            <label class="radio-card" data-group="work_style">
+              <input type="radio" name="work_style" value="in_office">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+              <h4>Full-Time Office</h4>
+              <p>Away 8+ hours/day; independent pet</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
+            Weekend Rhythm
+          </span>
+          <div class="options-grid">
+            <label class="radio-card" data-group="weekend_vibe">
+              <input type="radio" name="weekend_vibe" value="outdoors_active">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2L7 10l-6 8h22L14 6z"/></svg>
+              <h4>Outdoors & Athletics</h4>
+              <p>Trails, parks, mountain excursions</p>
+            </label>
+            <label class="radio-card" data-group="weekend_vibe">
+              <input type="radio" name="weekend_vibe" value="social_nightlife">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M21 5V3H3v2l8 9v5H6v2h12v-2h-5v-5l8-9zM7.43 7L5.66 5h12.69l-1.78 2H7.43z"/></svg>
+              <h4>Social & Dining Out</h4>
+              <p>Dinner parties, busy venues, nightlife</p>
+            </label>
+            <label class="radio-card selected" data-group="weekend_vibe">
+              <input type="radio" name="weekend_vibe" value="chill_creative" checked>
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.23 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+              <h4>Creative & Cozy</h4>
+              <p>Coffee, bookstores, cooking, art</p>
+            </label>
+            <label class="radio-card" data-group="weekend_vibe">
+              <input type="radio" name="weekend_vibe" value="cozy_homebody">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M20 10V7c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v3c-1.1 0-2 .9-2 2v5h1.33L4 21h2l.67-2h10.67l.66 2h2l.67-2H22v-5c0-1.1-.9-2-2-2zm-9 0H6V7h5v3zm7 0h-5V7h5v3z"/></svg>
+              <h4>Homebody Sanctuary</h4>
+              <p>Low-key recharge, films, reading</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            Sound & Noise Tolerance
+          </span>
+          <div class="options-grid">
+            <label class="radio-card selected" data-group="noise_tolerance">
+              <input type="radio" name="noise_tolerance" value="quiet" checked>
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+              <h4>Quiet & Serene</h4>
+              <p>Dislikes loud barking, easily overstimulated</p>
+            </label>
+            <label class="radio-card" data-group="noise_tolerance">
+              <input type="radio" name="noise_tolerance" value="moderate">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              <h4>Moderate Vibe</h4>
+              <p>Comfortable with typical household life</p>
+            </label>
+            <label class="radio-card" data-group="noise_tolerance">
+              <input type="radio" name="noise_tolerance" value="bustling">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              <h4>Bustling Atmosphere</h4>
+              <p>Thrives in vocal, energetic homes</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="taste-category">
+          <span class="category-label">
+            <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            Travel & Vacation Frequency
+          </span>
+          <div class="options-grid">
+            <label class="radio-card selected" data-group="travel_frequency">
+              <input type="radio" name="travel_frequency" value="rarely" checked>
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              <h4>Rarely Away</h4>
+              <p>Stay local, travel 1-2 times per year</p>
+            </label>
+            <label class="radio-card" data-group="travel_frequency">
+              <input type="radio" name="travel_frequency" value="moderate">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM19 17H5v-4.66l.12-.34h13.77l.11.34V17z"/></svg>
+              <h4>Moderate Getaways</h4>
+              <p>Occasional weekend trips or vacations</p>
+            </label>
+            <label class="radio-card" data-group="travel_frequency">
+              <input type="radio" name="travel_frequency" value="frequent">
+              <svg class="card-icon-svg" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+              <h4>Frequent Flyer</h4>
+              <p>On the road often; requires easy travel/care</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="btn-back-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 11H7.14l5.43-5.43-1.42-1.42L2.86 12l8.29 8.29 1.42-1.42L7.14 13H19v-2z"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-primary" id="btn-synthesize">
+            <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            <span>Match My Pet with Qloo Taste Intelligence</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Synthesis Animated Processing State -->
+    <div class="synthesis-loader" id="loader-box">
+      <div class="loader-orb">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z"/></svg>
+      </div>
+      <h3>Translating Cultural Taste to Lifestyle Matrix</h3>
+      <p class="loader-status" id="loader-text">Querying Qloo taste correlation engine...</p>
+    </div>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results-container">
+      <!-- Cultural Profile Banner -->
+      <div class="profile-banner">
+        <div class="banner-left">
+          <div class="profile-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            <span>Qloo Cultural Archetype</span>
+          </div>
+          <h2 class="profile-title" id="res-archetype">The Urban Remote Sanctuary</h2>
+          <p class="profile-narrative" id="res-narrative">
+            Your cultural profile blends creative downtime with focused remote work.
+          </p>
+          <div class="affinity-chips" id="res-affinities">
+            <!-- Chips rendered via JS -->
+          </div>
+        </div>
+
+        <!-- 5D Lifestyle Vector Summary Card -->
+        <div class="vector-metrics-card">
+          <div class="metrics-title">
+            <span>5D Lifestyle Vector</span>
+            <button class="tune-btn" id="btn-open-tuner">
+              <svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+              Adjust Sliders
+            </button>
+          </div>
+          <div id="vector-metric-bars">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Tab Switcher -->
+      <div class="results-tabs">
+        <button class="res-tab-btn active" data-tab="dogs" id="tab-dogs">
+          <svg viewBox="0 0 24 24"><path d="M4.5 10.5C3.67 10.5 3 9.83 3 9s.67-1.5 1.5-1.5S6 8.17 6 9s-.67 1.5-1.5 1.5zm15 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-7.5-6C8.91 4.5 6.75 6.66 6.75 9.75c0 3.86 3.75 8.25 5.25 9.75 1.5-1.5 5.25-5.89 5.25-9.75C17.25 6.66 15.09 4.5 12 4.5z"/></svg>
+          Top 3 Dogs
+        </button>
+        <button class="res-tab-btn" data-tab="cats" id="tab-cats">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-4 7c.83 0 1.5.67 1.5 1.5S8.83 12 8 12s-1.5-.67-1.5-1.5S7.17 9 8 9zm8 0c.83 0 1.5.67 1.5 1.5S16.83 12 16 12s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm-4 8c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
+          Top 3 Cats
+        </button>
+        <button class="res-tab-btn" data-tab="both" id="tab-both">
+          <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          Combined Top Picks
+        </button>
+      </div>
+
+      <!-- Breed Cards Grid (With Real Images in Suggestion Box) -->
+      <div class="breeds-grid" id="breeds-card-grid">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Runner Ups Section -->
+      <div class="runner-up-section" id="runner-up-wrap">
+        <h3 class="section-subhead">
+          <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <span>Close Contenders & Honorable Mentions</span>
+        </h3>
+        <div class="runner-grid" id="runner-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- Recalculate CTA -->
+      <div style="text-align: center; margin-top: 48px;">
+        <button type="button" class="btn-secondary" id="btn-restart">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          Retake Lifestyle Quiz
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal: Live 5D Vector Tuner -->
+    <div class="modal-overlay" id="tuner-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>Fine-Tune Your Lifestyle Vector</h3>
+          <button class="close-btn" id="btn-close-tuner">&times;</button>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 22px;">
+          Adjust the dimensions below to see how shifts in your activity, space, or schedule recalculate your top breed recommendations.
+        </p>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Activity Level</span>
+            <span class="slider-val" id="val-activity">3.0</span>
+          </div>
+          <input type="range" min="1" max="5" step="0.1" class="custom-range" id="range-activity">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Living Space</span>
+            <span class="slider-val" id="val-space">3.0</span>
+          </div>
+          <input type="range" min="1" max="5" step="0.1" class="custom-range" id="range-space">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Social Exposure</span>
+            <span class="slider-val" id="val-social">3.0</span>
+          </div>
+          <input type="range" min="1" max="5" step="0.1" class="custom-range" id="range-social">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Home Presence / Routine</span>
+            <span class="slider-val" id="val-travel">3.0</span>
+          </div>
+          <input type="range" min="1" max="5" step="0.1" class="custom-range" id="range-travel">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label-row">
+            <span>Noise & Vibe Tolerance</span>
+            <span class="slider-val" id="val-noise">3.0</span>
+          </div>
+          <input type="range" min="1" max="5" step="0.1" class="custom-range" id="range-noise">
+        </div>
+
+        <div style="margin-top: 28px;">
+          <button type="button" class="btn-primary" id="btn-apply-tuning" style="width: 100%; justify-content: center;">
+            <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            Recalculate Matches
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>
+        Built with <strong>Qloo Taste Intelligence API</strong> & Euclidean Breed Trait Modeling.<br>
+        Curated across 24 distinct Canine & Feline breeds. Limited strictly to Dogs & Cats.
+      </p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
