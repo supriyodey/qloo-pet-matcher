@@ -315,11 +315,15 @@ function renderResults(data) {
   document.getElementById("res-archetype").textContent = cultural_profile.archetype;
   document.getElementById("res-narrative").textContent = cultural_profile.narrative;
 
-  // Affinities
+  // Affinities & Qloo Live Signals
   const affWrap = document.getElementById("res-affinities");
-  affWrap.innerHTML = (cultural_profile.affinities_detected || []).map(a => 
+  const liveChips = (cultural_profile.correlated_context || []).map(c => 
+    `<span class="affinity-chip" style="border-color:var(--gold-primary); color:var(--gold-deep); font-weight:600;">✦ ${c}</span>`
+  );
+  const detectedChips = (cultural_profile.affinities_detected || []).map(a => 
     `<span class="affinity-chip">${a}</span>`
-  ).join("");
+  );
+  affWrap.innerHTML = [...liveChips, ...detectedChips].join("");
 
   // 5D Lifestyle Vector Bars
   const barsContainer = document.getElementById("vector-metric-bars");

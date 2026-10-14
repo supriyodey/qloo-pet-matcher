@@ -3,9 +3,13 @@ import re
 import math
 from typing import Dict, List, Any, Optional
 import httpx
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 QLOO_API_KEY = os.getenv("QLOO_API_KEY", "")
-QLOO_BASE_URL = os.getenv("QLOO_BASE_URL", "https://api.qloo.com/v2")
+QLOO_BASE_URL = os.getenv("QLOO_BASE_URL", "https://hackathon.api.qloo.com").rstrip("/")
 
 # Built-in cultural correlation graph modeling Qloo's taste-to-lifestyle affinities
 CULTURAL_TASTE_MODIFIERS: Dict[str, Dict[str, float]] = {
@@ -91,30 +95,107 @@ def detect_location_density(location: str) -> str:
     return "urban"
 
 async def fetch_qloo_cultural_insights(interests: List[str], location: str) -> Optional[Dict[str, Any]]:
-    """Calls Qloo API if API key is present."""
+    """
+    Connects to the real Qloo API (/search and /v2/insights).
+    Resolves user interests to entity IDs, queries correlated places & brands,
+    and extracts cultural lifestyle context.
+    """
     if not QLOO_API_KEY:
         return None
 
     headers = {
         "X-Api-Key": QLOO_API_KEY,
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "User-Agent": "PawVibe/1.0"
     }
 
+    entity_ids = []
+    matched_entities = []
+    correlated_places = []
+    correlated_brands = []
+    detected_tags = []
+
     try:
-        async with httpx.AsyncClient(timeout=4.0) as client:
-            # Query insights for entity affinities
-            response = await client.post(
-                f"{QLOO_BASE_URL}/insights",
-                json={
-                    "signals": interests,
-                    "location": location
-                },
-                headers=headers
-            )
-            if response.status_code == 200:
-                return response.json()
+        async with httpx.AsyncClient(timeout=6.0) as client:
+            # 1. Resolve top user interests to Qloo entities
+            for item in interests[:4]:
+                try:
+                    search_url = f"{QLOO_BASE_URL}/search"
+                    resp = await client.get(search_url, params={"query": item}, headers=headers)
+                    if resp.status_code == 200:
+                        results = resp.json().get("results", [])
+                        if results:
+                            top_entity = results[0]
+                            entity_id = top_entity.get("entity_id")
+                            name = top_entity.get("name")
+                            if entity_id:
+                                entity_ids.append(entity_id)
+                                matched_entities.append(name)
+                except Exception as err:
+                    print(f"Error querying Qloo search for '{item}': {err}")
+
+            # 2. If entity IDs found, query Qloo Insights for correlated places & brands
+            if entity_ids:
+                ent_query = ",".join(entity_ids[:3])
+
+                # Query Places
+                try:
+                    places_resp = await client.get(
+                        f"{QLOO_BASE_URL}/v2/insights",
+                        params={
+                            "signal.interests.entities": ent_query,
+                            "filter.type": "urn:entity:place"
+                        },
+                        headers=headers
+                    )
+                    if places_resp.status_code == 200:
+                        entities = places_resp.json().get("results", {}).get("entities", [])
+                        for p in entities[:4]:
+                            place_name = p.get("name")
+                            if place_name:
+                                correlated_places.append(place_name)
+                            for t in p.get("tags", []):
+                                t_name = t.get("name")
+                                if t_name and t_name not in detected_tags:
+                                    detected_tags.append(t_name)
+                except Exception as e:
+                    print(f"Error fetching place insights: {e}")
+
+                # Query Brands
+                try:
+                    brands_resp = await client.get(
+                        f"{QLOO_BASE_URL}/v2/insights",
+                        params={
+                            "signal.interests.entities": ent_query,
+                            "filter.type": "urn:entity:brand"
+                        },
+                        headers=headers
+                    )
+                    if brands_resp.status_code == 200:
+                        entities = brands_resp.json().get("results", {}).get("entities", [])
+                        for b in entities[:4]:
+                            brand_name = b.get("name")
+                            if brand_name:
+                                correlated_brands.append(brand_name)
+                            for t in b.get("tags", []):
+                                t_name = t.get("name")
+                                if t_name and t_name not in detected_tags:
+                                    detected_tags.append(t_name)
+                except Exception as e:
+                    print(f"Error fetching brand insights: {e}")
+
+            if matched_entities or correlated_places or correlated_brands:
+                return {
+                    "matched_entities": matched_entities,
+                    "correlated_places": correlated_places,
+                    "correlated_brands": correlated_brands,
+                    "detected_tags": detected_tags[:8],
+                    "live_connected": True
+                }
+
     except Exception as e:
-        print(f"Qloo API call failed or timed out: {e}. Falling back to internal taste engine.")
+        print(f"Qloo API insights failed: {e}. Falling back to internal taste engine.")
+
     return None
 
 def synthesize_lifestyle_vector(
@@ -215,18 +296,37 @@ def synthesize_lifestyle_vector(
                 accumulated_mods["noise"] += 0.3
                 applied_affinities.append("Nightlife & Dining")
 
-    # Ingest Qloo external affinities if available
-    qloo_source = "qloo_live" if qloo_data else "qloo_cultural_taste_engine"
-    if qloo_data and "affinities" in qloo_data:
-        for aff in qloo_data["affinities"]:
-            cat = aff.get("category", "").lower()
-            weight = aff.get("weight", 0.5)
-            if "outdoor" in cat or "fitness" in cat:
-                accumulated_mods["activity"] += 0.5 * weight
-            elif "nightlife" in cat or "dining" in cat:
-                accumulated_mods["social"] += 0.5 * weight
-            elif "literature" in cat or "film" in cat:
-                accumulated_mods["noise"] -= 0.4 * weight
+    # Ingest Qloo Live API cultural data if available
+    qloo_source = "qloo_live_api" if qloo_data else "qloo_cultural_taste_engine"
+    correlated_notes = []
+
+    if qloo_data:
+        matched = qloo_data.get("matched_entities", [])
+        places = qloo_data.get("correlated_places", [])
+        brands = qloo_data.get("correlated_brands", [])
+        tags = qloo_data.get("detected_tags", [])
+
+        if matched:
+            correlated_notes.append(f"Recognized: {', '.join(matched[:2])}")
+        if brands:
+            correlated_notes.append(f"Affinities: {', '.join(brands[:2])}")
+        if places:
+            correlated_notes.append(f"Places: {', '.join(places[:2])}")
+
+        for t in tags:
+            t_lower = t.lower()
+            if any(k in t_lower for k in ["park", "nature", "outdoor", "adventure", "trail"]):
+                accumulated_mods["activity"] += 0.3
+                accumulated_mods["space"] += 0.2
+                applied_affinities.append(t)
+            elif any(k in t_lower for k in ["tranquil", "quiet", "relaxing", "historic", "museum", "art"]):
+                accumulated_mods["noise"] -= 0.3
+                accumulated_mods["activity"] -= 0.2
+                applied_affinities.append(t)
+            elif any(k in t_lower for k in ["lively", "nightlife", "bar", "cocktail", "trendy", "central"]):
+                accumulated_mods["social"] += 0.35
+                accumulated_mods["noise"] += 0.3
+                applied_affinities.append(t)
 
     # Sum and clamp to [1.0, 5.0]
     final_activity = max(1.0, min(5.0, round(base_activity + accumulated_mods["activity"], 2)))
@@ -250,11 +350,12 @@ def synthesize_lifestyle_vector(
     elif final_activity >= 3.8:
         archetype = "Dynamic Active Mover"
 
+    qloo_note_str = f" [Qloo Live: {' | '.join(correlated_notes)}]" if correlated_notes else ""
     narrative = (
         f"Your affinity for {', '.join(interests[:3]) if interests else 'creative pursuits'} "
         f"paired with your {home_type.replace('_', ' ')} living in {location or 'your neighborhood'} "
         f"places you in the '{archetype}' profile. You register an activity rhythm of "
-        f"{final_activity}/5 and a home-presence level of {final_travel}/5."
+        f"{final_activity}/5 and a home-presence level of {final_travel}/5.{qloo_note_str}"
     )
 
     return {
@@ -269,6 +370,7 @@ def synthesize_lifestyle_vector(
             "archetype": archetype,
             "location_density": loc_density,
             "affinities_detected": list(dict.fromkeys(applied_affinities))[:6],
+            "correlated_context": correlated_notes,
             "narrative": narrative,
             "qloo_source": qloo_source
         }

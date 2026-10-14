@@ -4,6 +4,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 import taste_engine
 import matcher
@@ -103,6 +107,7 @@ def health_check():
     return {
         "status": "online",
         "qloo_api_configured": bool(taste_engine.QLOO_API_KEY),
+        "qloo_base_url": taste_engine.QLOO_BASE_URL,
         "total_breeds": len(breeds),
         "dogs_count": dogs_count,
         "cats_count": cats_count
