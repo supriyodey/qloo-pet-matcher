@@ -147,6 +147,28 @@ header.app-header {
 .header-status {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.pitch-deck-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--color-white);
+  border: 1px solid var(--gold-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pitch-deck-btn:hover {
+  background: var(--gold-primary);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.25);
 }
 
 .status-badge {
