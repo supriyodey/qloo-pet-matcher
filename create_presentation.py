@@ -76,8 +76,13 @@ set_slide_background(s1)
 # Main Cover Card
 add_card(s1, Inches(1.2), Inches(1.0), Inches(10.933), Inches(5.5), COLOR_WHITE, COLOR_GOLD)
 
+# Brand Logo
+logo_img_path = os.path.join(os.path.dirname(__file__), "frontend", "logo.jpg")
+if os.path.exists(logo_img_path):
+    s1.shapes.add_picture(logo_img_path, Inches(8.8), Inches(1.8), Inches(2.7), Inches(2.7))
+
 # Brand Badge
-tag1 = s1.shapes.add_textbox(Inches(1.8), Inches(1.6), Inches(9.5), Inches(0.4))
+tag1 = s1.shapes.add_textbox(Inches(1.8), Inches(1.6), Inches(6.8), Inches(0.4))
 tf1 = tag1.text_frame
 p1 = tf1.paragraphs[0]
 p1.text = "QLOO AGENTIC & CULTURAL AI HACKATHON 2026"
@@ -86,7 +91,7 @@ p1.font.bold = True
 p1.font.color.rgb = COLOR_GOLD_DEEP
 
 # Title
-t1 = s1.shapes.add_textbox(Inches(1.8), Inches(2.0), Inches(9.5), Inches(1.2))
+t1 = s1.shapes.add_textbox(Inches(1.8), Inches(2.0), Inches(6.8), Inches(1.2))
 tf_t1 = t1.text_frame
 p_t1 = tf_t1.paragraphs[0]
 p_t1.text = "PawVibe"
@@ -95,20 +100,20 @@ p_t1.font.bold = True
 p_t1.font.color.rgb = COLOR_CHARCOAL
 
 # Subtitle
-sub1 = s1.shapes.add_textbox(Inches(1.8), Inches(3.1), Inches(9.5), Inches(0.8))
+sub1 = s1.shapes.add_textbox(Inches(1.8), Inches(3.1), Inches(6.8), Inches(0.8))
 tf_sub1 = sub1.text_frame
 p_sub1 = tf_sub1.paragraphs[0]
 p_sub1.text = "Bridging Cultural Taste Intelligence to Canine & Feline Compatibility"
-p_sub1.font.size = Pt(18)
+p_sub1.font.size = Pt(17)
 p_sub1.font.color.rgb = COLOR_GOLD_DEEP
 p_sub1.font.bold = True
 
-desc1 = s1.shapes.add_textbox(Inches(1.8), Inches(3.85), Inches(9.0), Inches(0.8))
+desc1 = s1.shapes.add_textbox(Inches(1.8), Inches(3.9), Inches(6.8), Inches(0.8))
 tf_desc1 = desc1.text_frame
 tf_desc1.word_wrap = True
 p_desc1 = tf_desc1.paragraphs[0]
 p_desc1.text = "“Your tastes define your routine. Your routine chooses your pet.”\nTurning music, cinema, dining, and neighborhood rhythms into predictive 5D pet lifestyle vectors."
-p_desc1.font.size = Pt(13)
+p_desc1.font.size = Pt(12)
 p_desc1.font.italic = True
 p_desc1.font.color.rgb = COLOR_GREY_BODY
 
@@ -602,5 +607,10 @@ s8.notes_slide.notes_text_frame.text = (
 
 # Save the presentation
 output_pptx_path = r"C:\Users\devsu\.gemini\antigravity-ide\scratch\qloo-pet-matcher\PawVibe_Hackathon_Pitch_Deck.pptx"
-prs.save(output_pptx_path)
-print(f"Presentation saved successfully to: {output_pptx_path}")
+try:
+    prs.save(output_pptx_path)
+    print(f"Presentation saved successfully to: {output_pptx_path}")
+except PermissionError:
+    alt_path = r"C:\Users\devsu\.gemini\antigravity-ide\scratch\qloo-pet-matcher\PawVibe_Hackathon_Pitch_Deck_v2.pptx"
+    prs.save(alt_path)
+    print(f"Original file was open in PowerPoint. Saved updated deck with logo to: {alt_path}")
